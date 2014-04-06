@@ -1,0 +1,62 @@
+.auction-list {
+	.auction {
+		.row;
+		.palette-clouds;
+
+		margin: 15px 0;
+		border-color: @asbestos;
+		border-radius: @border-radius-base;
+		border-size: 2px;
+		border-style: none;
+		border-bottom-style: solid;
+
+		.price {
+			.make-sm-column(2);
+			.palette-peter-river;
+
+			border-right: 1px solid @asbestos;
+			color: #fff;
+			font-size: 3em;
+			font-weight: 100;
+			text-align: center;
+		}
+
+		.info {
+			.make-sm-column(10);
+
+			.title {
+				font-family: @font-family-base;
+				font-size: 1.5em;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+.auction-view {
+	.detail-row {
+		.row;
+		color: @silver;
+		min-height: 80px;
+		line-height: 80px;
+
+		.creator {
+			.make-sm-column(2);
+			font-size: 1.3em;
+		}
+		.end-time {
+			.make-sm-column(3);
+		}
+		.current-price {
+			.make-sm-column(7);
+
+			font-size: 3em;
+			font-weight: 100;
+			text-align: right;
+
+			&>span {
+				color: @asbestos;
+			}
+		}
+	}
+}

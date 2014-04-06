@@ -28,8 +28,8 @@ module.exports = (grunt) ->
     # Watches files for changes and runs tasks based on the changed files
     watch:
       coffee:
-        files: ["<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}"]
-        tasks: ["newer:coffee:dist"]
+        files: ["<%= yeoman.app %>/scripts/**/*.{coffee,litcoffee,coffee.md}"]
+        tasks: ["newer:coffee:dist", 'concat:distjs']
 
       coffeeTest:
         files: ["test/spec/{,*/}*.{coffee,litcoffee,coffee.md}"]
@@ -37,6 +37,10 @@ module.exports = (grunt) ->
           "newer:coffee:test"
           "karma"
         ]
+
+      distJs:
+        files: ['.tmp/scripts/**/!(application).js']
+        tasks: ['concat:distjs']
 
       styles:
         files: ["<%= yeoman.app %>/styles/{,*/}*.css"]
@@ -48,14 +52,20 @@ module.exports = (grunt) ->
       gruntfile:
         files: ["Gruntfile.js"]
 
+      less:
+        files: ["<%= yeoman.app %>/less/{,*/}*.less"]
+        tasks: [
+          "less:dist"
+        ]
+
       livereload:
         options:
           livereload: "<%= connect.options.livereload %>"
 
         files: [
-          "<%= yeoman.app %>/{,*/}*.html"
-          ".tmp/styles/{,*/}*.css"
-          ".tmp/scripts/{,*/}*.js"
+          "<%= yeoman.app %>/**/*.html"
+          ".tmp/styles/**/*.css"
+          ".tmp/scripts/**/*.js"
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
 
@@ -146,7 +156,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.app %>/scripts"
-          src: "{,*/}*.coffee"
+          src: "**/*.coffee"
           dest: ".tmp/scripts"
           ext: ".js"
         ]
@@ -245,6 +255,11 @@ module.exports = (grunt) ->
       dist:
         html: ["<%= yeoman.dist %>/*.html"]
 
+    less:
+      dist:
+        files:
+          ".tmp/styles/application.css": "<%= yeoman.app %>/less/application.less"
+
 
     # Copies remaining files to places other tasks can use
     copy:
@@ -279,12 +294,20 @@ module.exports = (grunt) ->
         dest: ".tmp/styles/"
         src: "{,*/}*.css"
 
+      fonts:
+        expand: true
+        flatten: true
+        cwd: "<%= yeoman.app %>"
+        dest: ".tmp/fonts"
+        src: ["bower_components/fontawesome/fonts/*"]
+
 
     # Run some tasks in parallel to speed up the build process
     concurrent:
       server: [
         "coffee:dist"
         "copy:styles"
+        "copy:fonts"
       ]
       test: [
         "coffee"
@@ -320,15 +343,18 @@ module.exports = (grunt) ->
     #     }
     #   }
     # },
-    # concat: {
-    #   dist: {}
-    # },
+    concat:
+      distjs:
+        src: [".tmp/scripts/**/!(application).js"]
+        dest: ".tmp/scripts/application.js"
 
     # Test settings
     karma:
       unit:
         configFile: "karma.conf.js"
         singleRun: true
+
+  grunt.loadNpmTasks 'grunt-contrib-less'
 
   grunt.registerTask "serve", (target) ->
     if target is "dist"
@@ -340,8 +366,10 @@ module.exports = (grunt) ->
       "clean:server"
       "bower-install"
       "concurrent:server"
+      "concat:distjs"
       "autoprefixer"
       "connect:livereload"
+      "less:dist"
       "watch"
     ]
     return
@@ -368,6 +396,7 @@ module.exports = (grunt) ->
     "ngmin"
     "copy:dist"
     "cdnify"
+    "less:dist"
     "cssmin"
     "uglify"
     "rev"

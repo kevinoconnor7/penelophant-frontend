@@ -1,0 +1,13 @@
+<h2 class="page-header">Auctions</h2>
+
+<div class="auction-list">
+	<div class="auction" ng-repeat="auction in auctions">
+		<div class="price">
+			<span ng-if="!auction.sealed_bids">${{auction.current_price}}</span>
+			<span ng-if="auction.sealed_bids"><i class="fa fa-envelope" data-title="Bids are sealed for this auction" bs-tooltip></i></span>
+		</div>
+		<div class="info">
+			<span class="title"><a href="#/auctions/{{auction.id}}">{{auction.title}}</a></span>
+		</div>
+	</div>
+</div>

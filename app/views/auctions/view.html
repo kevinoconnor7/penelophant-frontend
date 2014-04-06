@@ -1,0 +1,42 @@
+<div class="auction-view">
+	<h2 class="page-header">{{auction.title}}</h2>
+
+	<div class="detail-row">
+		<div class="creator">
+			<i class="fa fa-user"></i>
+			{{auction.creator.display_name}}
+		</div>
+		<div class="end-time">
+			<i class="fa fa-clock-o"></i>
+			{{auction.end_time}}
+		</div>
+		<div class="current-price">
+			Current Price:
+			<span ng-if="!auction.sealed_bids">${{auction.current_price}}</span>
+			<span ng-if="auction.sealed_bids"><i class="fa fa-envelope" data-title="Bids are sealed for this auction" bs-tooltip></i></span>
+		</div>
+	</div>
+
+	<div class="place-bid" ng-if="auction.has_started && !auction.has_ended">
+		<a href="#/auctions/{{auction.id}}/bid" class="btn btn-primary btn-lg pull-right">Place Bid</a>
+	</div>
+
+	<div ng-if="!auction.sealed_bids">
+		<hr>
+		<h3>Bid History</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Time</th>
+					<th>Bid Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="bid in auction.bids">
+					<td>{{bid.bid_time}}</td>
+					<td>${{bid.price}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
