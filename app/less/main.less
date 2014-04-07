@@ -1,13 +1,13 @@
-html,
-body {
-  font-size: 15px;
-  height: 100%;
-}
+// html,
+// body {
+//   font-size: 15px;
+//   height: 100%;
+// }
 
 body {
-  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  //font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   background: #FFFFFF;
-  margin: 75px 0 0;
+  //margin: 53px 0 0;
   padding: 0;
   color: #555555;
   text-rendering: optimizeLegibility;
@@ -23,14 +23,117 @@ body {
 	}
 }
 
+.main-content {
+  .container;
+  padding: 60px 15px 0;
+}
+
+
+/* Login Screen */
+body.PwdAuthCtrl {
+  .palette-turquoise;
+}
 .login-screen {
+  .row;
+  padding: 50px 0;
+
 	.login-icon {
+    .make-sm-column-offset(1);
+    .make-sm-column(2);
 		color: #fff;
-		left: 275px;
+    font-family: @font-family-base;
+    position: inherit;
+		text-align: right;
+
 
 		.icon {
 			font-size: 5em;
 			margin-bottom: -35px;
 		}
 	}
+	.login-form {
+    .make-sm-column(6);
+    &> h4 {
+      color: #fff;
+      font-family: @font-family-base;
+      font-weight: 100;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      top: -59px;
+      width: 100%;
+    }
+		.has-error {
+			.form-control {
+				border-color: @brand-danger;
+			}
+		}
+	}
+}
+
+
+/* Navbar */
+.navbar-inverse .navbar-toggle {
+  color: @navbar-inverse-toggle-color;
+  font-size: floor(@component-font-size-base * 1.467); // ~22px
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  .transition(color .25s linear);
+  &:before {
+    content: '';
+    display: none;
+  }
+
+  &:hover {
+    color: @navbar-inverse-toggle-hover-color;
+  }
+}
+
+/* Alerts */
+.alert {
+	outline: none;
+}
+
+/* Footer */
+#main-footer {
+  // background-color: @midnight-blue;
+  .palette-clouds;
+  border-top: 1px solid @silver;
+  padding: 20px 0;
+
+  .weHeartYou {
+    color: @asbestos;
+    text-align: right;
+
+    -webkit-font-smoothing: antialiased;
+    .transition(color .25s linear);
+
+    &:hover {
+      color: @navbar-inverse-toggle-hover-color;
+    }
+
+    .fa-heart {
+      color: @pomegranate;
+      margin-left: 3px;
+    }
+  }
+}
+
+
+/* Sticky footer */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+#main-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
 }

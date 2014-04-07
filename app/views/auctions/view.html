@@ -11,8 +11,8 @@
 			{{auction.end_time}}
 		</div>
 		<div class="current-price">
-			Current Price:
-			<span ng-if="!auction.sealed_bids">${{auction.current_price}}</span>
+			<i class="fa fa-usd"></i>
+			<span ng-if="!auction.sealed_bids">{{auction.current_price}}</span>
 			<span ng-if="auction.sealed_bids"><i class="fa fa-envelope" data-title="Bids are sealed for this auction" bs-tooltip></i></span>
 		</div>
 	</div>

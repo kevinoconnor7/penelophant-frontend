@@ -19,20 +19,18 @@
     <link rel="stylesheet" href="styles/application.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="penelophantFrontendApp">
+  <body ng-app="penelophantFrontendApp" ng-class="controller">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation" bs-navbar>
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation" bs-navbar ng-controller="NavCtrl">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <i class="fa fa-bars"></i>
           </button>
           <a class="navbar-brand" href="#/"><i class="fa fa-gavel"></i> Penelophant</a>
         </div>
@@ -42,13 +40,21 @@
             <li data-match-route="/auctions"><a href="#/auctions">Auctions</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li data-match-route="/login"><a href="#/login">Login</a></li>
+            <li data-match-route="/login" ng-if="!current_user.isLoggedIn()"><a href="#/login">Login</a></li>
+            <li data-match-route="/profile" data-require-logged-in=""><a href="#/profile">{{current_user.user.display_name}}</a><li>
+            <li data-match-route="/logout" data-require-logged-in=""><a href="#/logout">Logout</a><li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
-    <div class="container" ng-view=""></div>
+    <div class="main-content" ng-view=""></div>
+
+    <footer id="main-footer">
+      <div class="container">
+        <div class="weHeartYou">Made with <i class="fa fa-heart"></i></div>
+      </div>
+    </footer>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -87,7 +93,6 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/application.js"></script>
-    <script src="scripts/controllers/auctions.js"></script>
     <!-- endbuild -->
 </body>
 </html>
