@@ -2,6 +2,7 @@
 
 angular.module 'penelophantFrontendApp'
  .controller 'PwdAuthCtrl', ($scope, Restangular, $alert, AuthService, $location) ->
+  return $location.path '/' if AuthService.isLoggedIn()
   loginError = null
 
   showError = () ->

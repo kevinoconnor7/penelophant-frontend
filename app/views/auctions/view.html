@@ -1,6 +1,8 @@
 <div class="auction-view">
 	<h2 class="page-header">{{auction.title}}</h2>
 
+	<div id="error-container"></div>
+
 	<div class="detail-row">
 		<div class="creator">
 			<i class="fa fa-user"></i>
@@ -12,16 +14,30 @@
 		</div>
 		<div class="current-price">
 			<i class="fa fa-usd"></i>
-			<span ng-if="!auction.sealed_bids">{{auction.current_price}}</span>
-			<span ng-if="auction.sealed_bids"><i class="fa fa-envelope" data-title="Bids are sealed for this auction" bs-tooltip></i></span>
+			<span ng-if="!auction.sealed_bids && !auction.has_ended">{{auction.current_price}}</span>
+			<span ng-if="auction.sealed_bids && !auction.has_ended"><i class="fa fa-envelope" data-title="Bids are sealed for this auction" bs-tooltip></i></span>
+			<span ng-if="auction.has_ended">{{auction.highest_bid.price}}</span>
+			<div class="reserve-not-met" ng-if="!auction.reserve_met">
+				Reserve not met
+			</div>
 		</div>
 	</div>
 
-	<div class="place-bid" ng-if="auction.has_started && !auction.has_ended">
-		<a href="#/auctions/{{auction.id}}/bid" class="btn btn-primary btn-lg pull-right">Place Bid</a>
+<div class="bid-row">
+	<div class="place-bid" data-require-logged-in ng-if="auction.has_started && !auction.has_ended">
+		<form name="placeBidForm" ng-submit="postBid(placeBidForm.$valid, bid)" novalidate>
+			<div class="input-group" ng-class="{ 'has-error' : placeBidForm.price.$invalid && !placeBidForm.price.$pristine }">
+				<span class="input-group-addon"><i class="fa fa-usd"></i></span>
+				<input type="number" name="price" ng-model="bid.price" class="form-control bid-price" placeholder="Bid" ng-pattern="/^[0-9]+[.]?[0-9]{0,2}$/">
+				<div class="input-group-btn">
+					<button class="btn btn-primary btn-embossed btn-lg pull-right" type="submit" ng-click="showBidForm=!showBidForm">Place Bid</button>
+				</div>
+			</div>
+		</form>
 	</div>
+</div>
 
-	<div ng-if="!auction.sealed_bids">
+	<div ng-if="!auction.sealed_bids || auction.bids">
 		<hr>
 		<h3>Bid History</h3>
 		<table class="table">

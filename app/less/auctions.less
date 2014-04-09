@@ -34,6 +34,9 @@
 }
 
 .auction-view {
+	.page-header {
+		margin-bottom: 3px;
+	}
 	.detail-row {
 		.row;
 		color: @silver;
@@ -41,22 +44,38 @@
 		line-height: 80px;
 
 		.creator {
-			.make-sm-column(2);
+			.make-md-column(2);
 			font-size: 1.3em;
 		}
 		.end-time {
-			.make-sm-column(4);
+			.make-md-column(4);
 		}
 		.current-price {
-			.make-sm-column(6);
+			.make-md-column(6);
 
 			font-size: 3em;
 			font-weight: 100;
+			line-height: 50px;
 			text-align: right;
 
 			&>span {
 				color: @peter-river;
 			}
+
+			.reserve-not-met {
+				.text-warning;
+				font-size: 0.4em;
+				line-height: 40px;
+			}
+		}
+	}
+
+	.bid-row {
+		.row;
+
+		.place-bid {
+			.make-md-column(4);
+			.pull-right;
 		}
 	}
 }

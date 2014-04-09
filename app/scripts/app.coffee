@@ -10,6 +10,7 @@ app = angular.module('penelophantFrontendApp', [
 ])
 
 app.config ($routeProvider, RestangularProvider) ->
+    #RestangularProvider.setBaseUrl 'https://penelophant.herokuapp.com/api'
     RestangularProvider.setBaseUrl 'http://localhost:5000/api'
     $routeProvider
       .when '/',
@@ -29,6 +30,9 @@ app.config ($routeProvider, RestangularProvider) ->
       .when '/logout',
         templateUrl: 'views/logout.html'
         controller: 'LogoutCtrl'
+      .when '/register',
+        templateUrl: 'views/register.html'
+        controller: 'RegisterCtrl'
       .otherwise
         redirectTo: '/'
 

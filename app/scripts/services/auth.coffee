@@ -18,6 +18,10 @@ angular.module 'penelophantFrontendApp'
       this.loggedIn = true
       this.user = data.user
       $window.sessionStorage.token = data.token
+
+      Restangular.addFullRequestInterceptor (element, operation, what, url) =>
+        headers:
+          Authorization: 'Bearer ' + this.getToken()
     getToken: () ->
       if not this.token and $window.sessionStorage.token
         return $window.sessionStorage.token
