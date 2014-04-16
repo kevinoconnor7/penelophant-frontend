@@ -24,7 +24,7 @@
 	</div>
 
 <div class="bid-row">
-	<div class="place-bid" data-require-logged-in ng-if="auction.has_started && !auction.has_ended">
+	<div class="place-bid" data-require-logged-in ng-if="auction.has_started && !auction.has_ended && auction.creator.id != $root.current_user.user.id">
 		<form name="placeBidForm" ng-submit="postBid(placeBidForm.$valid, bid)" novalidate>
 			<div class="input-group" ng-class="{ 'has-error' : placeBidForm.price.$invalid && !placeBidForm.price.$pristine }">
 				<span class="input-group-addon"><i class="fa fa-usd"></i></span>
