@@ -15,10 +15,17 @@ angular.module('penelophantFrontendApp')
       end_time: moment().add('days', 7).toString()
       start_price: 0
       reserve: 0
+    $scope.auctionTypes = Restangular
+      .all 'auctions/types'
+      .getList()
+      .$object
     $scope.checkAuctionType = ($valid, auction) ->
       return false if not $valid or not auction.type
 
-      return true
+      for auctionType in $scope.auctionTypes
+        return true if auctionType.type == auction.type
+
+      return false
 
     $scope.addAuction = (auction) ->
       createdAuction = Restangular
@@ -43,10 +50,16 @@ angular.module('penelophantFrontendApp')
 angular.module('penelophantFrontendApp')
   .controller 'AuctionsViewCtrl', ($scope, Restangular, $routeParams, $alert, AuthService) ->
 
-    $scope.auction = Restangular
-      .one 'auctions', parseInt($routeParams.id, 10)
-      .get()
-      .$object
+    getAuction = () ->
+      $scope.auction = Restangular
+        .one 'auctions', parseInt($routeParams.id, 10)
+        .get()
+        .$object
+
+    getAuction()
+
+    $scope.formatTime = (time) ->
+      moment(time).format('MMMM Do YYYY, h:mm:ss a')
 
     $scope.postBid = (valid, bid) ->
       return if not AuthService.isLoggedIn()
@@ -58,10 +71,7 @@ angular.module('penelophantFrontendApp')
           type: "success"
           container: "#error-container"
         bid.price = null
-        $scope.auction = Restangular
-          .one 'auctions', parseInt($routeParams.id, 10)
-          .get()
-          .$object
+        getAuction()
       , (resp) ->
         $alert
           title: "Oh no!"

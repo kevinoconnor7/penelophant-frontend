@@ -6,18 +6,18 @@
       <p>To start off you'll need to select the type of auction you would like to run.</p>
       <div class="row">
         <div class="col-md-4">
-          <div class="radio">
+          <div class="radio" ng-repeat="auctionType in auctionTypes">
             <label>
-              <input type="radio" name="auctionType" value="doubleblind" ng-model="auction.type" required> Double Blind Auction
-            </label>
-          </div>
-          <div class="radio">
-            <label>
-              <input type="radio" name="auctionType" value="highestbid" ng-model="auction.type" required> Highest-Bid Auction
+              <input type="radio" name="auctionType" value="{{auctionType.type}}" ng-model="auction.type" required> {{auctionType.title}}
             </label>
           </div>
         </div>
-        <div class="col-md-8 well">{{auction.type}}</div>
+        <div class="col-md-8 well">
+          <div ng-if="auction.type">
+            <h4>{{(auctionTypes | filter:{type:auction.type})[0].title}}</h4>
+            {{(auctionTypes | filter:{type:auction.type})[0].description}}
+          </div>
+        </div>
       </div>
       <button class="btn btn-primary btn-embossed pull-right" wz-next ng-disabled="addAuctionType.$invalid || !checkAuctionType(addAuctionType.$valid, auction)">Next</button>
     </form>
@@ -98,7 +98,7 @@
           <dt>Reserve Price</dt>
           <dd><i class="fa fa-usd"></i>{{auction.reserve}}</dd>
           <dt>Type</dt>
-          <dd>{{auction.type}}</dd>
+          <dd>{{(auctionTypes | filter:{type:auction.type})[0].title}}</dd>
         </dl>
       </div>
     </div>

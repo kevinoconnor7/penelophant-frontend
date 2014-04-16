@@ -57,24 +57,14 @@ app.run ($rootScope, Restangular, AuthService, $location, $q) ->
       $rootScope.controller = data.$$route.controller
 
   $rootScope.$on '$routeChangeStart', (event, next, current) ->
-    console.log next
     next.resolve = angular.extend next.resolve || {},
       _auth_: () ->
         defer = $q.defer()
         AuthService.resolve().then () ->
-          #if next.loggedIn is true and not AuthService.isLoggedIn()
-          #  defer.reject()
           defer.resolve AuthService
         , () ->
           if next.loggedIn is true and not AuthService.isLoggedIn()
-            console.log "reject!"
             $location.path '/login'
           defer.resolve AuthService
 
-
         defer.promise
-
-  #$rootScope.$on '$routeChangeStart', (event, next, current) ->
-  #  if next.loggedIn is true and not AuthService.isLoggedIn()
-
-
