@@ -28,7 +28,7 @@ module.exports = (grunt) ->
     # Watches files for changes and runs tasks based on the changed files
     watch:
       coffee:
-        files: ["<%= yeoman.app %>/scripts/**/*.{coffee,litcoffee,coffee.md}"]
+        files: ["<%= yeoman.app %>/scripts/{,**/}*.{coffee,litcoffee,coffee.md}"]
         tasks: ["newer:coffee:dist", 'concat:distjs']
 
       coffeeTest:
@@ -39,7 +39,7 @@ module.exports = (grunt) ->
         ]
 
       distJs:
-        files: ['.tmp/scripts/**/!(application).js']
+        files: ['.tmp/scripts/{,*/}!(application).js']
         tasks: ['concat:distjs']
 
       styles:
@@ -63,9 +63,9 @@ module.exports = (grunt) ->
           livereload: "<%= connect.options.livereload %>"
 
         files: [
-          "<%= yeoman.app %>/**/*.html"
-          ".tmp/styles/**/*.css"
-          ".tmp/scripts/**/*.js"
+          "<%= yeoman.app %>/{,**/}*.html"
+          ".tmp/styles/{,*/}*.css"
+          ".tmp/scripts/{,*/}*.js"
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
 
@@ -156,7 +156,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "<%= yeoman.app %>/scripts"
-          src: "**/*.coffee"
+          src: "{,**/}*.coffee"
           dest: ".tmp/scripts"
           ext: ".js"
         ]
@@ -165,7 +165,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "test/spec"
-          src: "{,*/}*.coffee"
+          src: "{,**/}*.coffee"
           dest: ".tmp/spec"
           ext: ".js"
         ]
@@ -275,7 +275,7 @@ module.exports = (grunt) ->
               ".htaccess"
               "*.html"
               "views/{,*/}*.html"
-              "bower_components/**/*"
+              "bower_components/{,*/}*"
               "images/{,*/}*.{webp}"
               "fonts/*"
             ]
@@ -345,7 +345,7 @@ module.exports = (grunt) ->
     # },
     concat:
       distjs:
-        src: [".tmp/scripts/**/!(application).js"]
+        src: [".tmp/scripts/{,**/}!(application).js"]
         dest: ".tmp/scripts/application.js"
 
     # Test settings

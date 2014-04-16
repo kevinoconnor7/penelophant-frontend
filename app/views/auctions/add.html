@@ -1,0 +1,110 @@
+<div id="error-container"></div>
+<wizard hide-indicators="true" on-finish="addAuction(auction)">
+  <wz-step title="Auction Type">
+    <form name="addAuctionType" novalidate>
+      <h2>Let's get started...</h2>
+      <p>To start off you'll need to select the type of auction you would like to run.</p>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="radio">
+            <label>
+              <input type="radio" name="auctionType" value="doubleblind" ng-model="auction.type" required> Double Blind Auction
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="auctionType" value="highestbid" ng-model="auction.type" required> Highest-Bid Auction
+            </label>
+          </div>
+        </div>
+        <div class="col-md-8 well">{{auction.type}}</div>
+      </div>
+      <button class="btn btn-primary btn-embossed pull-right" wz-next ng-disabled="addAuctionType.$invalid || !checkAuctionType(addAuctionType.$valid, auction)">Next</button>
+    </form>
+  </wz-step>
+  <wz-step title="Auction Details">
+    <form name="addAuctionDetails" novalidate>
+      <h2>About the auction</h2>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.title.$invalid && !addAuctionDetails.title.$pristine }">
+            <label for="auction-title">Title</label>
+            <input type="text" class="form-control" name="title" ng-model="auction.title" required>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.start_time.$invalid && !addAuctionDetails.start_time.$pristine }">
+            <label for="auction-start-time">Start Date/Time</label>
+            <div class="dropdown">
+              <a class="dropdown-toggle" id="startDateTime" role="button" data-toggle="dropdown">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="auction-start-time" name="start_time" data-ng-model="auction.start_time" required>
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <datetimepicker data-ng-model="auction.start_time" data-datetimepicker-config="{ dropdownSelector: '#startDateTime' }"/>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.end_time.$invalid && !addAuctionDetails.end_time.$pristine }">
+            <label for="auction-end-time">End Date/Time</label>
+            <div class="dropdown">
+              <a class="dropdown-toggle" id="endDateTime" role="button" data-toggle="dropdown">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="auction-end-time" name="end_time" data-ng-model="auction.end_time" required>
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+              </a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <datetimepicker data-ng-model="auction.end_time" data-datetimepicker-config="{ dropdownSelector: '#endDateTime' }"/>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.start_price.$invalid && !addAuctionDetails.start_price.$pristine }">
+            <label for="auction-start-price">Start price</label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+              <input type="number" class="form-control" name="start_price" id="auction-start-proce" data-ng-model="auction.start_price" required ng-pattern="/^[0-9]+[.]?[0-9]{0,2}$/">
+            </div>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.reserve.$invalid && !addAuctionDetails.reserve.$pristine }">
+            <label for="auction-reserve">Reserve price</label>
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+              <input type="number" class="form-control" name="reserve" id="auction-reserve" data-ng-model="auction.reserve" required ng-pattern="/^[0-9]+[.]?[0-9]{0,2}$/">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-default btn-embossed pull-left" wz-previous>Prev</button>
+        <button class="btn btn-primary btn-embossed pull-right" wz-next ng-disabled="addAuctionDetails.$invalid">Next</button>
+      </div>
+    </form>
+  </wz-step>
+  <wz-step title="Confirmation">
+    <h2>How do things look?</h2>
+
+    <div class="row">
+      <div class="col-md-12">
+        <dl class="dl-horizontal">
+          <dt>Title</dt>
+          <dd>{{auction.title}}</dd>
+          <dt>Start Time</dt>
+          <dd>{{auction.start_time}}</dd>
+          <dt>End Time</dt>
+          <dd>{{auction.end_time}}</dd>
+          <dt>Start Price</dt>
+          <dd><i class="fa fa-usd"></i>{{auction.start_price}}</dd>
+          <dt>Reserve Price</dt>
+          <dd><i class="fa fa-usd"></i>{{auction.reserve}}</dd>
+          <dt>Type</dt>
+          <dd>{{auction.type}}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn btn-default btn-embossed pull-left" wz-previous>Prev</button>
+      <button class="btn btn-primary btn-embossed pull-right" wz-next>Create Auction</button>
+    </div>
+  </wz-step>
+</wizard>

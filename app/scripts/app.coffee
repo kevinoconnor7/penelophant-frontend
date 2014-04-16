@@ -6,7 +6,10 @@ app = angular.module('penelophantFrontendApp', [
   'ngSanitize',
   'ngRoute',
   'mgcrea.ngStrap',
-  'restangular'
+  'restangular',
+  'mgo-angular-wizard',
+  'flatui.radioButton',
+  'ui.bootstrap.datetimepicker'
 ])
 
 app.config ($routeProvider, RestangularProvider) ->
@@ -22,21 +25,24 @@ app.config ($routeProvider, RestangularProvider) ->
       .when '/auctions',
         templateUrl: 'views/auctions/index.html'
         controller: 'AuctionsListCtrl'
-        method: 'index'
+      .when '/auctions/add',
+        templateUrl: 'views/auctions/add.html'
+        controller: 'AuctionsAddCtrl'
+        loggedIn: true
       .when '/auctions/:id',
         templateUrl: 'views/auctions/view.html'
         controller: 'AuctionsViewCtrl'
-        method: 'view'
       .when '/logout',
         templateUrl: 'views/logout.html'
         controller: 'LogoutCtrl'
+        loggedIn: true
       .when '/register',
         templateUrl: 'views/register.html'
         controller: 'RegisterCtrl'
       .otherwise
         redirectTo: '/'
 
-app.run ($rootScope, Restangular, AuthService) ->
+app.run ($rootScope, Restangular, AuthService, $location, $q) ->
 
   Restangular.addFullRequestInterceptor (element, operation, what, url) ->
     headers:
@@ -44,6 +50,31 @@ app.run ($rootScope, Restangular, AuthService) ->
 
   AuthService.loadToken()
 
+  $rootScope.current_user = AuthService
+
   $rootScope.$on '$routeChangeSuccess', (ev,data) ->
     if data.$$route and data.$$route.controller
       $rootScope.controller = data.$$route.controller
+
+  $rootScope.$on '$routeChangeStart', (event, next, current) ->
+    console.log next
+    next.resolve = angular.extend next.resolve || {},
+      _auth_: () ->
+        defer = $q.defer()
+        AuthService.resolve().then () ->
+          #if next.loggedIn is true and not AuthService.isLoggedIn()
+          #  defer.reject()
+          defer.resolve AuthService
+        , () ->
+          if next.loggedIn is true and not AuthService.isLoggedIn()
+            console.log "reject!"
+            $location.path '/login'
+          defer.resolve AuthService
+
+
+        defer.promise
+
+  #$rootScope.$on '$routeChangeStart', (event, next, current) ->
+  #  if next.loggedIn is true and not AuthService.isLoggedIn()
+
+

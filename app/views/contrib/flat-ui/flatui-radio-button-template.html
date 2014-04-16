@@ -1,0 +1,13 @@
+<label class="radio" ng-class="{checked: checked()}" ng-transclude>
+  <span class="icons">
+    <i class="first-icon fa fa-circle-o"></i>
+    <i class="second-icon fa fa-dot-circle-o"></i>
+  </span>
+  <input type="radio"
+         ng-model="model"
+         ng-value="value"
+         ng-required="true"
+         name="{{name}}"/>
+
+  {{label}}
+</label>

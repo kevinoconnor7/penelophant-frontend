@@ -5,12 +5,12 @@
 .checkbox,
 .radio {
   margin-bottom: 12px;
-  padding-left: 32px;
+  padding-left: 24px;
   position: relative;
   .transition(color .25s linear);
   font-size: ceil(@component-font-size-base * 0.933); // ~14px
   line-height: 1.5; // 21px;
-  
+
   input {
     outline: none !important;
     display: none;
@@ -29,7 +29,7 @@
     text-align: center;
     line-height: 21px;
     font-size: 20px;
-    cursor: pointer;    
+    cursor: pointer;
     .transition(color .25s linear);
 
     .first-icon,
@@ -37,6 +37,7 @@
       display: inline-table;
       position: absolute;
       left: 0;
+      line-height: 22px;
       top: 0;
       background-color: transparent;
       margin: 0;
