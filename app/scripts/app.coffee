@@ -9,7 +9,8 @@ app = angular.module('penelophantFrontendApp', [
   'restangular',
   'mgo-angular-wizard',
   'flatui.radioButton',
-  'ui.bootstrap.datetimepicker'
+  'ui.bootstrap.datetimepicker',
+  'angularMoment'
 ])
 
 app.config ($routeProvider, RestangularProvider) ->
@@ -39,6 +40,9 @@ app.config ($routeProvider, RestangularProvider) ->
       .when '/register',
         templateUrl: 'views/register.html'
         controller: 'RegisterCtrl'
+      .when '/invoices',
+        templateUrl: 'views/invoices.html'
+        controller: 'InvoicesCtrl'
       .otherwise
         redirectTo: '/'
 

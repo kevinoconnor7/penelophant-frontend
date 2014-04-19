@@ -10,7 +10,7 @@
 		</div>
 		<div class="end-time">
 			<i class="fa fa-clock-o"></i>
-			{{formatTime(auction.end_time)}}
+			{{auction.end_time | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
 		</div>
 		<div class="current-price">
 			<i class="fa fa-usd"></i>
@@ -49,7 +49,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="bid in auction.bids">
-					<td>{{bid.bid_time}}</td>
+					<td>{{bid.bid_time | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
 					<td>${{bid.price}}</td>
 				</tr>
 			</tbody>
