@@ -81,6 +81,17 @@ body.RegisterCtrl {
 .navbar {
   height: 54px;
 }
+
+.navbar-nav {
+  &> li {
+    &> a {
+      &.dropdown-toggle {
+        padding: 14px 21px;
+      }
+    }
+  }
+}
+
 .navbar-inverse .navbar-toggle {
   color: @navbar-inverse-toggle-color;
   font-size: floor(@component-font-size-base * 1.467); // ~22px
