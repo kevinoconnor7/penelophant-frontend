@@ -10,7 +10,7 @@
 		<div id="login-alert-container"></div>
 		<form name="loginForm" ng-submit="auth(loginForm.$valid, user)" novalidate>
 			<div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }">
-				<input type="text" class="form-control login-field" name="email" placeholder="Username" ng-model="user.email" required />
+				<input type="text" class="form-control login-field" name="email" placeholder="E-mail" ng-model="user.email" required />
 			</div>
 			<div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
 				<input type="password" class="form-control login-field" name="password" placeholder="Password" ng-model="user.password" required />
