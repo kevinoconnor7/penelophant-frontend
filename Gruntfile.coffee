@@ -63,7 +63,7 @@ module.exports = (grunt) ->
           livereload: "<%= connect.options.livereload %>"
 
         files: [
-          "<%= yeoman.app %>/{,**/}*.html"
+          "<%= yeoman.app %>/{,*/}{,*/}{,*/}*.html"
           ".tmp/styles/{,*/}*.css"
           ".tmp/scripts/{,*/}*.js"
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
