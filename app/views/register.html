@@ -7,7 +7,7 @@
   </div>
   <div class="login-form">
     <h4>Hey there new guy!</h4>
-    <div id="login-alert-container"></div>
+    <alert ng-repeat="alert in registerAlerts" type="alert.type"><strong>{{alert.title}}</strong> {{alert.msg}}</alert>
     <form name="registerForm" ng-submit="register(registerForm.$valid, user)" novalidate>
       <div class="form-group" ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine }">
         <input type="text" class="form-control login-field" name="email" placeholder="E-mail" ng-model="user.email" required />

@@ -1,18 +1,14 @@
 'use strict'
 
 angular.module 'penelophantFrontendApp'
- .controller 'PwdAuthCtrl', ($scope, Restangular, $alert, AuthService, $location) ->
+ .controller 'PwdAuthCtrl', ($scope, Restangular, AuthService, $location) ->
   return $location.path '/' if AuthService.isLoggedIn()
   loginError = null
 
   showError = () ->
-    if loginError
-      loginError.destroy()
-    loginError = $alert
-      title: "Ruh-roh"
-      content: "We were not able to validate these credentials"
+    $scope.alert =
       type: "danger"
-      container: "#login-alert-container"
+      msg: "We were not able to validate these credentials"
 
   $scope.auth = (valid, user) ->
     if not valid

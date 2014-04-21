@@ -1,0 +1,29 @@
+<h2 class="page-header">
+  My Invoices
+</h2>
+
+<div class="invoices-list">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Auction</th>
+        <th>Amount Due</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="invoice in invoices">
+        <td><a href="#/auctions/{{invoice.bid.auction.id}}">{{invoice.bid.auction.title}}</a></td>
+        <td>
+          <span class="text-success" ng-if="invoice.paid">
+            <i class="fa fa-check-circle" tooltip="Invoice paid"></i>
+          </span>
+          <i class="fa fa-usd"></i>{{invoice.amount}}
+        </td>
+        <td>
+          <a href="#/invoices/{{invoice.id}}">View</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

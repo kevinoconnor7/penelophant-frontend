@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('penelophantFrontendApp')
-  .controller 'AuctionsListCtrl', ($scope, Restangular, $routeParams, $location) ->
+  .controller 'AuctionsListCtrl', ($scope, Restangular, $location) ->
     $scope.auctions = Restangular
       .all 'auctions'
       .getList $location.search()
@@ -48,7 +48,7 @@ angular.module('penelophantFrontendApp')
     return
 
 angular.module('penelophantFrontendApp')
-  .controller 'AuctionsViewCtrl', ($scope, Restangular, $routeParams, $alert, AuthService) ->
+  .controller 'AuctionsViewCtrl', ($scope, Restangular, $routeParams, AuthService) ->
 
     getAuction = () ->
       $scope.auction = Restangular
@@ -58,6 +58,8 @@ angular.module('penelophantFrontendApp')
 
     getAuction()
 
+    $scope.alerts = []
+
     $scope.formatTime = (time) ->
       moment(time).format('MMMM Do YYYY, h:mm:ss a')
 
@@ -65,17 +67,17 @@ angular.module('penelophantFrontendApp')
       return if not AuthService.isLoggedIn()
       return if not valid or not bid
       $scope.auction.post('bid', bid).then (data) ->
-        $alert
+        $scope.alerts = []
+        $scope.alerts.push 
           title: "Sweet!"
-          content: "Your bid for $#{data.price} was entered"
+          msg: "Your bid for $#{data.price} was entered"
           type: "success"
-          container: "#error-container"
         bid.price = null
         getAuction()
       , (resp) ->
-        $alert
+        $scope.alerts = []
+        $scope.alerts.push 
           title: "Oh no!"
-          content: resp.data.message
+          msg: resp.data.message
           type: "danger"
-          container: "#error-container"
     return

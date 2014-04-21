@@ -1,0 +1,72 @@
+<h2 class="page-header">
+  View Invoice
+</h2>
+
+<h3>Details</h3>
+<div class="invoice-view row">
+  <dl class="dl-horizontal">
+    <dt>Amount</dt>
+    <dd><i class="fa fa-usd"></i>{{invoice.amount}}</dd>
+    <dt>Auction</dt>
+    <dd><a href="#/auctions/{{invoice.bid.auction.id}}">{{invoice.bid.auction.title}}</a></dd>
+    <dt>Pay to</dt>
+    <dd>{{invoice.payee.display_name}}</dd>
+    <dt ng-if="invoice.paid">Paid</dt>
+    <dd ng-if="invoice.paid"><i class="fa fa-check"></i></dd>
+  </dl>
+</div>
+
+<div>
+  <h3>Pay now</h3>
+  <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)" ng-if="!invoice.paid">{{alert.msg}}</alert>
+  <alert type="'success'" ng-if="invoice.paid"><i class="fa fa-check-circle"></i> Invoice has been paid!</alert>
+
+  <tabset ng-if="!invoice.paid">
+    <tab heading="Credit Card">
+      <form name="ccPay" role="form" ng-submit="payCC(cc)" novalidate>
+        <div class="form-group" ng-class="{ 'has-error' : ccPay.ccName.$dirty && ccPay.ccName.$invalid }">
+          <label for="ccName">Name on Card</label>
+          <input type="text" id="ccName" name="ccName" class="form-control" autocomplete="off" placeholder="John Doe" ng-model="cc.name" required />
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : ccPay.ccNumber.$dirty && ccPay.ccNumber.$invalid }">
+          <label for="ccNumber">Card Number</label>
+          <input type="text" inputmode="numeric" id="ccNumber" name="ccNumber" class="form-control" autocomplete="off" placeholder="4111111111111111" pattern="[0-9]{13,16}" ng-model="cc.number" required credit-card-number />
+          <small>{{balanced.getCardType(cc.number)}}</small>
+        </div>
+        <div class="form-group">
+          <label for="ccExMonth">Expiration</label>
+          <div class="row">
+            <div class="col-xs-6" ng-class="{ 'has-error' : ccPay.ccExMonth.$dirty && ccPay.ccExMonth.$invalid }">
+              <input type="text" id="ccExMonth" inputmode="numeric" name="ccExMonth" class="form-control" autocomplete="off" placeholder="01" pattern="[0-9]{1,2}" maxlength="2" ng-model="cc.expiration_month" required />
+            </div>
+            <div class="col-xs-6" ng-class="{ 'has-error' : ccPay.ccExYear.$dirty && ccPay.ccExYear.$invalid }">
+              <input type="text" id="ccExYear" inputmode="numeric" name="ccExYear" class="form-control" autocomplete="off" placeholder="2013" pattern="[0-9]{4}" maxlength="4" ng-model="cc.expiration_year" required />
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : ccPay.ccExCsc.$dirty && ccPay.ccExCsc.$invalid }">
+          <label for="ccExCsc">Security Code (CVV)</label>
+          <input type="text" inputmode="numeric" id="ccExCsc" name="ccExCsc" class="form-control" autocomplete="off" placeholder="453" maxlength="4" pattern="[0-9]{3,4}" ng-model="cc.security_code" required />
+        </div>
+        <button type="submit" id="cc-submit" class="btn btn-primary">Pay now</button>
+      </form>
+    </tab>
+    <tab heading="Bank Transfer">
+      <form name="ba-pay" role="form" ng-submit="payBA(ba)">
+        <div class="form-group">
+          <label for="ba-name">Account Holder's Name</label>
+          <input type="text" id="ba-name" class="form-control" autocomplete="off" placeholder="John Doe" ng-model="ba.name" />
+        </div>
+        <div class="form-group">
+          <label for="ba-routing">Routing Number</label>
+          <input type="text" id="ba-routing" class="form-control" autocomplete="off" placeholder="322271627" ng-model="ba.routing_number" />
+        </div>
+        <div class="form-group">
+          <label for="ba-number">Account Number</label>
+          <input type="text" id="ba-number" class="form-control" autocomplete="off" placeholder="9900000000" ng-model="ba.account_number" />
+        </div>
+        <button type="submit" id="ba-submit" class="btn btn-primary">Pay now</buttion>
+      </form>
+    </tab>
+  </tabset>
+</div>

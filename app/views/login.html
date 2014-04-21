@@ -7,7 +7,7 @@
 	</div>
 	<div class="login-form">
 		<h4>Welcome back!</h4>
-		<div id="login-alert-container"></div>
+		<alert type="alert.type" ng-if="alert">{{alert.msg}}</alert>
 		<form name="loginForm" ng-submit="auth(loginForm.$valid, user)" novalidate>
 			<div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine }">
 				<input type="text" class="form-control login-field" name="email" placeholder="E-mail" ng-model="user.email" required />

@@ -1,7 +1,7 @@
 <div class="auction-view">
 	<h2 class="page-header">{{auction.title}}</h2>
 
-	<div id="error-container"></div>
+  <alert ng-repeat="alert in alerts" type="alert.type"><strong>{{alert.title}}</strong> {{alert.msg}}</alert>
 
 	<div class="detail-row">
 		<div class="creator">
@@ -15,7 +15,7 @@
 		<div class="current-price">
 			<i class="fa fa-usd"></i>
 			<span ng-if="!auction.sealed_bids && !auction.has_ended">{{auction.current_price}}</span>
-			<span ng-if="auction.sealed_bids && !auction.has_ended"><i class="fa fa-envelope" data-title="Bids are sealed for this auction" bs-tooltip></i></span>
+			<span ng-if="auction.sealed_bids && !auction.has_ended"><i class="fa fa-envelope" tooltip="Bids are sealed for this auction"></i></span>
 			<span ng-if="auction.has_ended">{{auction.highest_bid.price}}</span>
 			<div class="reserve-not-met" ng-if="!auction.reserve_met">
 				Reserve not met
@@ -43,14 +43,16 @@
 		<table class="table">
 			<thead>
 				<tr>
+          <th>Bid Amount</th>
 					<th>Time</th>
-					<th>Bid Amount</th>
+					<th>User</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="bid in auction.bids">
+          <td>${{bid.price}}</td>
 					<td>{{bid.bid_time | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
-					<td>${{bid.price}}</td>
+          <td>{{bid.user.display_name}}</td>
 				</tr>
 			</tbody>
 		</table>

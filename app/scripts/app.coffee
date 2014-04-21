@@ -5,12 +5,12 @@ app = angular.module('penelophantFrontendApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'mgcrea.ngStrap',
   'restangular',
   'mgo-angular-wizard',
   'flatui.radioButton',
   'ui.bootstrap.datetimepicker',
-  'angularMoment'
+  'angularMoment',
+  'ui.bootstrap'
 ])
 
 app.config ($routeProvider, RestangularProvider) ->
@@ -41,8 +41,11 @@ app.config ($routeProvider, RestangularProvider) ->
         templateUrl: 'views/register.html'
         controller: 'RegisterCtrl'
       .when '/invoices',
-        templateUrl: 'views/invoices.html'
-        controller: 'InvoicesCtrl'
+        templateUrl: 'views/invoices/index.html'
+        controller: 'InvoicesListCtrl'
+      .when '/invoices/:id',
+        templateUrl: 'views/invoices/view.html'
+        controller: 'InvoicesViewCtrl'
       .otherwise
         redirectTo: '/'
 

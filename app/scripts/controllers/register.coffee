@@ -1,17 +1,16 @@
 'use strict'
 
 angular.module('penelophantFrontendApp')
-  .controller 'RegisterCtrl', ($scope, $alert, AuthService, Restangular, $location) ->
+  .controller 'RegisterCtrl', ($scope, AuthService, Restangular, $location) ->
     return $location.path '/' if AuthService.isLoggedIn()
+    $scope.registerAlerts = []
     registerError = null
     showError = () ->
-      if registerError
-        registerError.destroy()
-      registerError = $alert
-        title: "Ruh-roh"
-        content: "We weren't able to create you an account. Do you already have an account?"
+      $scope.registerAlerts = []
+      $scope.registerAlerts.push 
+        msg: "We weren't able to create you an account. Do you already have an account?"
+        title: "Ruh-roh!"
         type: "danger"
-        container: "#login-alert-container"
 
     $scope.register = (valid, user) ->
       return showError() if not valid
