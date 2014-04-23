@@ -275,11 +275,17 @@ module.exports = (grunt) ->
               ".htaccess"
               "*.html"
               "views/{,*/}*.html"
-              "bower_components/{,*/}*"
+              #"bower_components/{,*/}*"
               "images/{,*/}*.{webp}"
-              "fonts/*"
+              #"fonts/*"
             ]
-          }
+          },
+          {
+            expand: true
+            cwd: ".tmp/fonts"
+            dest: "<%= yeoman.dist %>/fonts"
+            src: ["*"]
+          },
           {
             expand: true
             cwd: ".tmp/images"
@@ -315,6 +321,8 @@ module.exports = (grunt) ->
       ]
       dist: [
         "coffee"
+        "less:dist"
+        "copy:fonts"
         "copy:styles"
         "imagemin"
         "svgmin"
@@ -396,7 +404,6 @@ module.exports = (grunt) ->
     "ngmin"
     "copy:dist"
     "cdnify"
-    "less:dist"
     "cssmin"
     "uglify"
     "rev"
