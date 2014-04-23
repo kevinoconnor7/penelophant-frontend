@@ -12,6 +12,7 @@ app = angular.module('penelophantFrontendApp', [
   'angularMoment',
   'ui.bootstrap',
   'btford.markdown'
+  'LocalStorageModule'
 ])
 
 app.config ($routeProvider, RestangularProvider) ->

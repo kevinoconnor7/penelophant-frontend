@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module 'penelophantFrontendApp'
- .service 'AuthService', (Restangular, $window, $timeout, $q) ->
+ .service 'AuthService', (Restangular, $window, $timeout, $q, localStorageService) ->
     # AngularJS will instantiate a singleton by calling "new" on this function
     loggedIn: false
     user: null
@@ -11,7 +11,7 @@ angular.module 'penelophantFrontendApp'
       this.loggedIn = false
       this.user = null
       this.token = null
-      $window.sessionStorage.removeItem 'token'
+      this.destroyToken()
     isLoggedIn: () ->
       this.loggedIn
 
@@ -19,17 +19,18 @@ angular.module 'penelophantFrontendApp'
       this.token = data.token
       this.loggedIn = true
       this.user = data.user
-      $window.sessionStorage.token = data.token
+      localStorageService.set 'token', data.token
 
       Restangular.addFullRequestInterceptor (element, operation, what, url) =>
         headers:
           Authorization: 'Bearer ' + this.getToken()
     getToken: () ->
-      if not this.token and $window.sessionStorage.token
-        return $window.sessionStorage.token
+      if not this.token and localStorageService.get 'token'
+        return localStorageService.get 'token'
       else
         return this.token
     verifyToken: (token) ->
+      return false if not token
       Restangular
         .one "token"
         .get()
@@ -38,7 +39,10 @@ angular.module 'penelophantFrontendApp'
           this.setUser data
         , () =>
           this.triedToken = true
-          $window.sessionStorage.removeItem 'token'
+          this.destroyToken()
+
+    destroyToken: () ->
+      localStorageService.remove 'token'
 
     resolve: () ->
       defer = $q.defer()
@@ -53,8 +57,8 @@ angular.module 'penelophantFrontendApp'
           .then (data) =>
             this.setUser data
             defer.resolve this
-          , () ->
-            $window.sessionStorage.removeItem 'token'
+          , () =>
+            this.destroyToken()
             defer.reject()
       else
         defer.reject()
@@ -62,5 +66,4 @@ angular.module 'penelophantFrontendApp'
 
     loadToken: () ->
       return if this.loggedIn
-      if $window.sessionStorage.token
-        this.verifyToken $window.sessionStorage.token
+      this.verifyToken this.getToken()
