@@ -15,8 +15,7 @@ app = angular.module('penelophantFrontendApp', [
 ])
 
 app.config ($routeProvider, RestangularProvider) ->
-    #RestangularProvider.setBaseUrl 'https://penelophant.herokuapp.com/api'
-    RestangularProvider.setBaseUrl 'http://localhost:5000/api'
+    RestangularProvider.setBaseUrl '/api'
     $routeProvider
       .when '/',
         templateUrl: 'views/main.html'
