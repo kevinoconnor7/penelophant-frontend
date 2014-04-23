@@ -19,6 +19,8 @@ angular.module('penelophantFrontendApp')
       .all 'auctions/types'
       .getList()
       .$object
+
+    $scope.alerts = []
     $scope.checkAuctionType = ($valid, auction) ->
       return false if not $valid or not auction.type
 
@@ -33,6 +35,7 @@ angular.module('penelophantFrontendApp')
         .post(
           type: auction.type
           title: auction.title
+          description: auction.description
           start_price: auction.start_price
           reserve: auction.reserve
           start_time: moment.utc(auction.start_time).unix()
@@ -40,11 +43,11 @@ angular.module('penelophantFrontendApp')
         ).then (data) ->
           $location.path '/auctions/' + data.id
         , (resp) ->
-          $alert
+          $scope.alerts = []
+          $scope.alerts.push
             title: "Oh no!"
-            content: resp.data.message
+            msg: resp.data.message
             type: "danger"
-            container: "#error-container"
     return
 
 angular.module('penelophantFrontendApp')
@@ -68,7 +71,7 @@ angular.module('penelophantFrontendApp')
       return if not valid or not bid
       $scope.auction.post('bid', bid).then (data) ->
         $scope.alerts = []
-        $scope.alerts.push 
+        $scope.alerts.push
           title: "Sweet!"
           msg: "Your bid for $#{data.price} was entered"
           type: "success"
@@ -76,7 +79,7 @@ angular.module('penelophantFrontendApp')
         getAuction()
       , (resp) ->
         $scope.alerts = []
-        $scope.alerts.push 
+        $scope.alerts.push
           title: "Oh no!"
           msg: resp.data.message
           type: "danger"

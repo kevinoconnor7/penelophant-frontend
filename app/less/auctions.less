@@ -28,6 +28,9 @@
 				font-family: @font-family-base;
 				font-size: 1.5em;
 				font-weight: bold;
+				white-space: nowrap;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
 			}
 		}
 	}
@@ -44,16 +47,15 @@
 		line-height: 80px;
 
 		.creator {
-			.make-md-column(2);
-			font-size: 1.3em;
+			.make-md-column(3);
 		}
 		.end-time {
 			.make-md-column(4);
 		}
 		.current-price {
-			.make-md-column(6);
+			.make-md-column(5);
 
-			font-size: 3em;
+			font-size: 2.5em;
 			font-weight: 100;
 			line-height: 50px;
 			text-align: right;
@@ -73,9 +75,11 @@
 	.bid-row {
 		.row;
 
+		.auction-desc {
+			.make-md-column(8);
+		}
 		.place-bid {
 			.make-md-column(4);
-			.pull-right;
 		}
 	}
 }

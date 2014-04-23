@@ -10,7 +10,8 @@ app = angular.module('penelophantFrontendApp', [
   'flatui.radioButton',
   'ui.bootstrap.datetimepicker',
   'angularMoment',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'btford.markdown'
 ])
 
 app.config ($routeProvider, RestangularProvider) ->

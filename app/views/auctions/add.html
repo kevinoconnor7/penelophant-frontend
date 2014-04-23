@@ -1,4 +1,4 @@
-<div id="error-container"></div>
+<alert ng-repeat="alert in alerts" type="alert.type"><strong>{{alert.title}}</strong> {{alert.msg}}</alert>
 <wizard hide-indicators="true" on-finish="addAuction(auction)">
   <wz-step title="Auction Type">
     <form name="addAuctionType" novalidate>
@@ -29,7 +29,18 @@
         <div class="col-md-12">
           <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.title.$invalid && !addAuctionDetails.title.$pristine }">
             <label for="auction-title">Title</label>
-            <input type="text" class="form-control" name="title" ng-model="auction.title" required>
+            <input type="text" id="auction-title" class="form-control" name="title" ng-model="auction.title" required>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.description.$invalid && !addAuctionDetails.description.$pristine }">
+            <label for="auction-description">Description</label>
+            <tabset>
+              <tab heading="Input">
+                <textarea class="form-control" id="auction-description" name="description" id="auction-decsription" ng-model="auction.description" rows="8"></textarea>
+              </tab>
+              <tab heading="Preview">
+                <div class="well" btf-markdown="auction.description"></div>
+              </tab>
+            </tabset>
           </div>
           <div class="form-group" ng-class="{ 'has-error' : addAuctionDetails.start_time.$invalid && !addAuctionDetails.start_time.$pristine }">
             <label for="auction-start-time">Start Date/Time</label>
@@ -99,6 +110,10 @@
           <dd><i class="fa fa-usd"></i>{{auction.reserve}}</dd>
           <dt>Type</dt>
           <dd>{{(auctionTypes | filter:{type:auction.type})[0].title}}</dd>
+          <dt>Description</dt>
+          <dd>
+            <div class="well" btf-markdown="auction.description"></div>
+          </dd>
         </dl>
       </div>
     </div>

@@ -10,7 +10,10 @@
 			<span ng-if="auction.sealed_bids"><i class="fa fa-envelope" tooltip="Bids are sealed for this auction"></i></span>
 		</div>
 		<div class="info">
-			<span class="title"><a href="#/auctions/{{auction.id}}">{{auction.title}}</a></span>
+			<div class="title"><a href="#/auctions/{{auction.id}}">{{auction.title}}</a></div>
+			<div class="end-time">
+				<i class="fa fa-clock-o"></i> {{auction.end_time | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+			</div>
 		</div>
 	</div>
 </div>
