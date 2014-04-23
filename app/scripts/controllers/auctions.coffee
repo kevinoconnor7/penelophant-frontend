@@ -9,7 +9,7 @@ angular.module('penelophantFrontendApp')
     return
 
 angular.module('penelophantFrontendApp')
-  .controller 'AuctionsAddCtrl', ($scope, Restangular, $routeParams, $location, $alert) ->
+  .controller 'AuctionsAddCtrl', ($scope, Restangular, $routeParams, $location) ->
     $scope.auction =
       start_time: moment().toString()
       end_time: moment().add('days', 7).toString()
